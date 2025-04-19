@@ -5,6 +5,9 @@ MRuby::Build.new do |conf|
   conf.gembox 'default'
   # conf.gembox 'full-core'
 
+  conf.cc.flags << '-g -O0 -fsanitize=address'
+  conf.linker.flags << '-fsanitize=address'
+
   conf.enable_debug
   conf.enable_bintest
   conf.enable_test

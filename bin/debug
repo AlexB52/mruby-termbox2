@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+lldb --one-line "process handle SIGTTOU -n false -p true -s false" \
+     -- ./mruby/bin/mruby $@
