@@ -1,9 +1,9 @@
 class Shell
   attr_reader :session
 
-  def self.run(session: nil, command:, opts: {})
+  def self.run(command:, session: nil, **opts)
     shell = new(session: (session || "tbtest#{Random.rand(1000)}"))
-    shell.start(command: command, opts: opts)
+    shell.start(command: command, **opts)
     sleep 0.05
     yield shell
   ensure
@@ -14,7 +14,7 @@ class Shell
     @session = session
   end
 
-  def start(command:, opts: {})
+  def start(command:, **opts)
     height = opts[:height] || 10
     width = opts[:width] || 120
 

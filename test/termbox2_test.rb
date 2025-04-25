@@ -26,6 +26,14 @@ class TestTermbox2 < Minitest::Test
     end
   end
 
+  def test_tb_height_and_width
+    command, expectation = config_for("tb_height_width")
+    Shell.run(command: command, height: 5, width: 50) do |shell|
+      assert_equal expectation, shell.screenshot
+      shell.send_keys('q')
+    end
+  end
+
   def config_for(name)
     [
       "bin/run ./test/examples/#{name}.rb",
