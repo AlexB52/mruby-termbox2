@@ -10,6 +10,12 @@ static mrb_value mrb_tb2_init() {
   return mrb_fixnum_value(tb_init());
 }
 
+static mrb_value mrb_tb2_init_rwfd(mrb_state* mrb, mrb_value self) {
+  mrb_int rfd, wfd;
+  mrb_get_args(mrb, "ii", &rfd, &wfd);
+  return mrb_fixnum_value(tb_init_rwfd(rfd, wfd));
+}
+
 static mrb_value mrb_tb2_shutdown() {
   return mrb_fixnum_value(tb_shutdown());
 }
@@ -117,6 +123,8 @@ void mrb_mruby_termbox2_gem_init(mrb_state* mrb) {
 
   mrb_define_module_function(mrb, module, "init", mrb_tb2_init,
                              MRB_ARGS_NONE());
+  mrb_define_module_function(mrb, module, "init_rwfd", mrb_tb2_init_rwfd,
+                             MRB_ARGS_REQ(2));
   mrb_define_module_function(mrb, module, "shutdown", mrb_tb2_shutdown,
                              MRB_ARGS_NONE());
   mrb_define_module_function(mrb, module, "width", mrb_tb2_width,
