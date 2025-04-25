@@ -20,16 +20,17 @@ class Shell
     `tmux new-session -d -x #{width} -y #{height} -s #{session} "#{command}"`
   end
 
-  def send_key(key)
-    `tmux send-keys -t #{session}  "#{key}"`
+  def send_key(keys)
+    `tmux send-keys -t #{session} "#{keys}"`
   end
 
-  def screenshot
-    `tmux capture-pane -pJS -100000 -t #{session}`
-  end
-
-  def capture_pane(out:)
-    `#{screenshot}  > "#{out}"`
+  def screenshot(out: nil)
+    `tmux capture-pane -t #{session} -e`
+    if out
+      `tmux show-buffer > #{out}`
+    else
+      `tmux show-buffer`
+    end
   end
 
   def kill
