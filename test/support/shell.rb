@@ -1,7 +1,7 @@
 class Shell
   attr_reader :session
 
-  def self.run(command:, session: nil, **opts)
+  def self.run(command, session: nil, **opts)
     shell = new(session: (session || "tbtest#{Random.rand(1000)}"))
     shell.start(command: command, **opts)
     sleep 0.05
