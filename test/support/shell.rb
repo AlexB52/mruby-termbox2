@@ -6,6 +6,7 @@ class Shell
     shell.start(command: command, opts: opts)
     sleep 0.1
     yield shell
+  ensure
     shell.kill
   end
 
