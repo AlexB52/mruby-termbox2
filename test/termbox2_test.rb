@@ -5,7 +5,7 @@ class TestTermbox2 < Minitest::Test
     command, expectation = config_for("tb_print_hello_world")
     Shell.run(command: command) do |shell|
       assert_equal expectation, shell.screenshot
-      shell.send_key('q')
+      shell.send_keys('q')
     end
   end
 
@@ -13,16 +13,16 @@ class TestTermbox2 < Minitest::Test
     command, expectation = config_for("tb_print_color")
     Shell.run(command: command) do |shell|
       assert_equal expectation, shell.screenshot
-      shell.send_key('q')
+      shell.send_keys('q')
     end
   end
 
   def test_tb_poll_event
     command, expectation = config_for("tb_poll_event")
     Shell.run(command: command) do |shell|
-      shell.send_key('r')
+      shell.send_keys('r')
       assert_equal expectation, shell.screenshot
-      shell.send_key('q')
+      shell.send_keys('q')
     end
   end
 

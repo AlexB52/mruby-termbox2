@@ -21,7 +21,7 @@ class Shell
     `tmux new-session -d -x #{width} -y #{height} -s #{session} "#{command}"`
   end
 
-  def send_key(keys)
+  def send_keys(keys)
     `tmux send-keys -t #{session} "#{keys}"`
   end
 
