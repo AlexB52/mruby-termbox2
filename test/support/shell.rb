@@ -21,6 +21,10 @@ class Shell
     `tmux new-session -d -x #{width} -y #{height} -s #{session} "#{command}"`
   end
 
+  def cursor_position
+    `tmux display-message -t #{session} -p '\#{cursor_y},\#{cursor_x}'`.chomp
+  end
+
   def send_keys(keys)
     `tmux send-keys -t #{session} "#{keys}"`
   end

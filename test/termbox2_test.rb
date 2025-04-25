@@ -54,6 +54,13 @@ class TestTermbox2 < Minitest::Test
     end
   end
 
+  def test_tb_set_cursor
+    Shell.run(command("tb_set_cursor.rb")) do |shell|
+      assert_equal "3,8", shell.cursor_position
+      shell.send_keys('q')
+    end
+  end
+
   private
 
   def config_for(name)
