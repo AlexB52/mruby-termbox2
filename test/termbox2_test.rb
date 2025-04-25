@@ -46,6 +46,14 @@ class TestTermbox2 < Minitest::Test
     end
   end
 
+  def test_tb_set_cell
+    command, expectation = config_for("tb_set_cell")
+    Shell.run(command: command) do |shell|
+      assert_equal expectation, shell.screenshot
+      shell.send_keys('q')
+    end
+  end
+
   private
 
   def config_for(name)
