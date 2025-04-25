@@ -1,0 +1,38 @@
+class Shell
+  attr_reader :session
+
+  def self.run(session: nil, command:, opts: {})
+    shell = new(session: (session || "tbtest#{Random.rand(100)}"))
+    shell.start(command: command, opts: opts)
+    sleep 0.1
+    yield shell
+    shell.kill
+  end
+
+  def initialize(session:)
+    @session = session
+  end
+
+  def start(command:, opts: {})
+    height = opts[:height] || 10
+    width = opts[:width] || 120
+
+    `tmux new-session -d -x #{width} -y #{height} -s #{session} "#{command}"`
+  end
+
+  def send_key(key)
+    `tmux send-keys -t #{session}  "#{key}"`
+  end
+
+  def screenshot
+    `tmux capture-pane -pJS -100000 -t #{session}`
+  end
+
+  def capture_pane(out:)
+    `#{screenshot}  > "#{out}"`
+  end
+
+  def kill
+    `tmux kill-session -t #{session}`
+  end
+end
