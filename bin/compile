@@ -1,0 +1,66 @@
+#!/usr/bin/env ruby
+require 'optparse'
+
+options = {
+  output: nil,
+  input: nil
+}
+
+parser = OptionParser.new do |opts|
+  opts.banner = "Usage: bin/compile [options] INPUT_FILE"
+
+  opts.on("-o", "--output OUTPUT", "Set output filename") do |output|
+    options[:output] = output
+  end
+
+  opts.on("-h", "--help", "Prints this help") do
+    puts opts
+    exit
+  end
+end
+
+# Parse options first
+parser.order!
+
+# Then get the leftover arguments (the input file)
+options[:input] = ARGV.shift
+
+# Validate required fields
+if options[:output].nil? || options[:input].nil?
+  puts parser
+  raise ArgumentError, "must pass an output and an input file"
+end
+
+# Now options[:output] and options[:input] are ready
+puts "Compiling #{options[:input]} to #{options[:output]}..."
+
+# Insert your compile logic here
+Dir.chdir("./mruby") do
+	`MRUBY_CONFIG=../build_config/compile.rb rake clean all`
+end
+
+Dir.mkdir("tmp") unless Dir.exist?("tmp")
+
+## Compile ruby file in bytecode
+`./mruby/bin/mrbc -B mruby_bytecode -o tmp/mruby_bytecode.c #{options[:input]}`
+
+## Create stub c wrapper
+File.open("tmp/stub.c", "wb+") { |f| f.write <<~C_STUB }
+	#include <mruby.h>
+	#include <mruby/irep.h>
+	#include "mruby_bytecode.c"
+
+	int
+	main(void)
+	{
+	  mrb_state *mrb = mrb_open();
+	  if (!mrb) { /* handle error */ }
+	  mrb_load_irep(mrb, mruby_bytecode);
+	  mrb_close(mrb);
+	  return 0;
+	}
+C_STUB
+
+## Compile c wrapper
+`gcc -std=c99 -I./mruby/include tmp/stub.c -o #{options[:output]} mruby/build/host/lib/libmruby.a -lm`
+
