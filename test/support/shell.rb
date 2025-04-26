@@ -39,6 +39,6 @@ class Shell
   end
 
   def kill
-    `tmux kill-session -t #{session}`
+    `tmux kill-session -t #{session} 2>/dev/null`
   end
 end
