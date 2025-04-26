@@ -6,6 +6,7 @@ Mruby bindings for the [termbox2 C library](https://github.com/termbox/termbox2)
   
   * Ruby 3 (for testing and compilation)
   * GCC (for compilation)
+  * Make sure to pull the git submodules as well
 
 ## Build
 
