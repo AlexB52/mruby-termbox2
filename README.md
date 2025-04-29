@@ -19,7 +19,9 @@ This build will be for development and testing mode
 
 To run mruby code, you need to build the mruby interpreter first with `bin/build`
 
-    bin/run examples/hello_world.rb
+    bin/run demos/hello_world.rb
+    bin/run demos/hangman.rb
+    bin/run demos/wordle.rb
  
 ## Testing
 
@@ -31,8 +33,8 @@ To run tests, you need to build the mruby interpreter first with `bin/build`
 
 ## Compile and run demos as executable
 
-    bin/compile -o my_programm demos/hello_world.rb
-    ./my_program
+    bin/compile -o wordle demos/wordle.rb
+    ./wordle
 
 The `bin/compile` will: 
 
