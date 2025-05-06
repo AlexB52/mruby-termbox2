@@ -1,5 +1,6 @@
 #define TB_IMPL
 
+#include <locale.h>
 #include <mruby.h>
 #include <mruby/compile.h>
 #include <mruby/hash.h>
@@ -7,6 +8,7 @@
 #include <termbox2.h>
 
 static mrb_value mrb_tb2_init() {
+  setlocale(LC_ALL, "");
   return mrb_fixnum_value(tb_init());
 }
 
