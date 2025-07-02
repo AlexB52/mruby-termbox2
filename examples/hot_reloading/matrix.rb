@@ -2,7 +2,10 @@ class Line
   include Enumerable
 
   CHARS = (
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+    "abcdefghijklmnopqrstuvwxyz" +
+    "0123456789" +
+    "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホ"
   ).chars
 
   attr_reader :height, :width, :length
@@ -23,8 +26,8 @@ class Line
     @height = -(@count + Random.rand(20))
     @width = width
     @length = @string.length
-    @last_color = color(:green)
-    @current_color = color(:black)
+    @last_color = color(:white)
+    @current_color = color(:green)
   end
 
   def increment
@@ -126,13 +129,3 @@ def tick
     raise 'Done'
   end
 end
-
-# begin
-#   setup
-#   loop do
-#     tick
-#   end
-# rescue => e
-#   Tb.shutdown
-#   raise e
-# end
