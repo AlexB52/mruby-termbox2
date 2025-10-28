@@ -4,7 +4,7 @@ class Shell
   def self.run(command, session: nil, **opts)
     shell = new(session: (session || "tbtest#{Random.rand(1000)}"))
     shell.start(command: command, **opts)
-    sleep 0.05
+    sleep 0.1
     yield shell
   ensure
     shell.kill
