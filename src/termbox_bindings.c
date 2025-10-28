@@ -61,26 +61,17 @@ static mrb_value mrb_tb2_set_cell(mrb_state* mrb, mrb_value self) {
   return mrb_fixnum_value(tb_set_cell(x, y, c, fg, bg));
 }
 
-static mrb_value mrb_tb2_event_to_hash(mrb_state* mrb,
-                                       const struct tb_event* ev) {
+static mrb_value mrb_tb2_event_to_hash(mrb_state* mrb, const struct tb_event* ev) {
   mrb_value hash = mrb_hash_new_capa(mrb, 8);
 
-  mrb_hash_set(mrb, hash, mrb_symbol_value(mrb_intern_lit(mrb, "type")),
-               mrb_fixnum_value(ev->type));
-  mrb_hash_set(mrb, hash, mrb_symbol_value(mrb_intern_lit(mrb, "key")),
-               mrb_fixnum_value(ev->key));
-  mrb_hash_set(mrb, hash, mrb_symbol_value(mrb_intern_lit(mrb, "ch")),
-               mrb_fixnum_value(ev->ch));
-  mrb_hash_set(mrb, hash, mrb_symbol_value(mrb_intern_lit(mrb, "mod")),
-               mrb_fixnum_value(ev->mod));
-  mrb_hash_set(mrb, hash, mrb_symbol_value(mrb_intern_lit(mrb, "x")),
-               mrb_fixnum_value(ev->x));
-  mrb_hash_set(mrb, hash, mrb_symbol_value(mrb_intern_lit(mrb, "y")),
-               mrb_fixnum_value(ev->y));
-  mrb_hash_set(mrb, hash, mrb_symbol_value(mrb_intern_lit(mrb, "w")),
-               mrb_fixnum_value(ev->w));
-  mrb_hash_set(mrb, hash, mrb_symbol_value(mrb_intern_lit(mrb, "h")),
-               mrb_fixnum_value(ev->h));
+  mrb_hash_set(mrb, hash, mrb_symbol_value(mrb_intern_lit(mrb, "type")), mrb_fixnum_value(ev->type));
+  mrb_hash_set(mrb, hash, mrb_symbol_value(mrb_intern_lit(mrb, "key")), mrb_fixnum_value(ev->key));
+  mrb_hash_set(mrb, hash, mrb_symbol_value(mrb_intern_lit(mrb, "ch")), mrb_fixnum_value(ev->ch));
+  mrb_hash_set(mrb, hash, mrb_symbol_value(mrb_intern_lit(mrb, "mod")), mrb_fixnum_value(ev->mod));
+  mrb_hash_set(mrb, hash, mrb_symbol_value(mrb_intern_lit(mrb, "x")), mrb_fixnum_value(ev->x));
+  mrb_hash_set(mrb, hash, mrb_symbol_value(mrb_intern_lit(mrb, "y")), mrb_fixnum_value(ev->y));
+  mrb_hash_set(mrb, hash, mrb_symbol_value(mrb_intern_lit(mrb, "w")), mrb_fixnum_value(ev->w));
+  mrb_hash_set(mrb, hash, mrb_symbol_value(mrb_intern_lit(mrb, "h")), mrb_fixnum_value(ev->h));
 
   return hash;
 }
@@ -120,37 +111,22 @@ static mrb_value mrb_tb2_set_input_mode(mrb_state* mrb, mrb_value self) {
 void mrb_mruby_termbox2_gem_init(mrb_state* mrb) {
   struct RClass* module = mrb_define_module(mrb, "Termbox2");
 
-  mrb_define_module_function(mrb, module, "hello_world", mrb_mruby_hello_world,
-                             MRB_ARGS_NONE());
+  mrb_define_module_function(mrb, module, "hello_world", mrb_mruby_hello_world, MRB_ARGS_NONE());
 
-  mrb_define_module_function(mrb, module, "init", mrb_tb2_init,
-                             MRB_ARGS_NONE());
-  mrb_define_module_function(mrb, module, "init_rwfd", mrb_tb2_init_rwfd,
-                             MRB_ARGS_REQ(2));
-  mrb_define_module_function(mrb, module, "shutdown", mrb_tb2_shutdown,
-                             MRB_ARGS_NONE());
-  mrb_define_module_function(mrb, module, "width", mrb_tb2_width,
-                             MRB_ARGS_NONE());
-  mrb_define_module_function(mrb, module, "height", mrb_tb2_height,
-                             MRB_ARGS_NONE());
-  mrb_define_module_function(mrb, module, "present", mrb_tb2_present,
-                             MRB_ARGS_NONE());
-  mrb_define_module_function(mrb, module, "clear", mrb_tb2_clear,
-                             MRB_ARGS_NONE());
-  mrb_define_module_function(mrb, module, "print", mrb_tb2_print,
-                             MRB_ARGS_REQ(5));
-  mrb_define_module_function(mrb, module, "poll_event", mrb_tb2_poll_event,
-                             MRB_ARGS_NONE());
-  mrb_define_module_function(mrb, module, "peek_event", mrb_tb2_peek_event,
-                             MRB_ARGS_REQ(1));
-  mrb_define_module_function(mrb, module, "set_cursor", mrb_tb2_set_cursor,
-                             MRB_ARGS_REQ(2));
-  mrb_define_module_function(mrb, module, "hide_cursor", mrb_tb2_hide_cursor,
-                             MRB_ARGS_NONE());
-  mrb_define_module_function(mrb, module, "set_native_input_mode",
-                             mrb_tb2_set_input_mode, MRB_ARGS_REQ(1));
-  mrb_define_module_function(mrb, module, "set_cell", mrb_tb2_set_cell,
-                             MRB_ARGS_REQ(5));
+  mrb_define_module_function(mrb, module, "init", mrb_tb2_init, MRB_ARGS_NONE());
+  mrb_define_module_function(mrb, module, "init_rwfd", mrb_tb2_init_rwfd, MRB_ARGS_REQ(2));
+  mrb_define_module_function(mrb, module, "shutdown", mrb_tb2_shutdown, MRB_ARGS_NONE());
+  mrb_define_module_function(mrb, module, "width", mrb_tb2_width, MRB_ARGS_NONE());
+  mrb_define_module_function(mrb, module, "height", mrb_tb2_height, MRB_ARGS_NONE());
+  mrb_define_module_function(mrb, module, "present", mrb_tb2_present, MRB_ARGS_NONE());
+  mrb_define_module_function(mrb, module, "clear", mrb_tb2_clear, MRB_ARGS_NONE());
+  mrb_define_module_function(mrb, module, "print", mrb_tb2_print, MRB_ARGS_REQ(5));
+  mrb_define_module_function(mrb, module, "poll_event", mrb_tb2_poll_event, MRB_ARGS_NONE());
+  mrb_define_module_function(mrb, module, "peek_event", mrb_tb2_peek_event, MRB_ARGS_REQ(1));
+  mrb_define_module_function(mrb, module, "set_cursor", mrb_tb2_set_cursor, MRB_ARGS_REQ(2));
+  mrb_define_module_function(mrb, module, "hide_cursor", mrb_tb2_hide_cursor, MRB_ARGS_NONE());
+  mrb_define_module_function(mrb, module, "set_native_input_mode", mrb_tb2_set_input_mode, MRB_ARGS_REQ(1));
+  mrb_define_module_function(mrb, module, "set_cell", mrb_tb2_set_cell, MRB_ARGS_REQ(5));
 }
 
 void mrb_mruby_termbox2_gem_final(mrb_state* mrb) {
