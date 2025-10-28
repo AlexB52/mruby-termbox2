@@ -78,14 +78,25 @@ static mrb_value mrb_tb2_event_to_hash(mrb_state* mrb, const struct tb_event* ev
 
 static mrb_value mrb_tb2_poll_event(mrb_state* mrb, mrb_value self) {
   struct tb_event ev;
-  int rc = tb_poll_event(&ev);
-  if (rc < 0) {
-    return mrb_nil_value();
-  }
+  for (;;) {
+    int rc = tb_poll_event(&ev);
+    if (rc >= 0) {
+      return mrb_tb2_event_to_hash(mrb, &ev);
+    }
 
-  return mrb_tb2_event_to_hash(mrb, &ev);
+    if (rc == TB_ERR_POLL && tb_last_errno() == EINTR) {
+      continue;
+    }
+
+    // Raise error
+    char buf[96];
+    int e = tb_last_errno();
+    snprintf(buf, sizeof(buf), "tb_poll_event failed (rc=%d, errno=%d, rc-message=%s)", rc, e, tb_strerror(rc));
+    mrb_raise(mrb, E_RUNTIME_ERROR, buf);
+  }
 }
 
+// This will need to fit the poll_event function
 static mrb_value mrb_tb2_peek_event(mrb_state* mrb, mrb_value self) {
   struct tb_event ev;
   mrb_int timeout;
