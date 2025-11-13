@@ -119,6 +119,12 @@ static mrb_value mrb_tb2_set_input_mode(mrb_state* mrb, mrb_value self) {
   return mrb_fixnum_value(tb_set_input_mode((int)mode));
 }
 
+static mrb_value mrb_tb2_set_output_mode(mrb_state* mrb, mrb_value self) {
+  mrb_int mode;
+  mrb_get_args(mrb, "i", &mode);
+  return mrb_fixnum_value(tb_set_output_mode((int)mode));
+}
+
 void mrb_mruby_termbox2_gem_init(mrb_state* mrb) {
   struct RClass* module = mrb_define_module(mrb, "Termbox2");
 
@@ -137,6 +143,8 @@ void mrb_mruby_termbox2_gem_init(mrb_state* mrb) {
   mrb_define_module_function(mrb, module, "set_cursor", mrb_tb2_set_cursor, MRB_ARGS_REQ(2));
   mrb_define_module_function(mrb, module, "hide_cursor", mrb_tb2_hide_cursor, MRB_ARGS_NONE());
   mrb_define_module_function(mrb, module, "set_native_input_mode", mrb_tb2_set_input_mode, MRB_ARGS_REQ(1));
+  mrb_define_module_function(mrb, module, "set_input_mode", mrb_tb2_set_input_mode, MRB_ARGS_REQ(1));
+  mrb_define_module_function(mrb, module, "set_output_mode", mrb_tb2_set_output_mode, MRB_ARGS_REQ(1));
   mrb_define_module_function(mrb, module, "set_cell", mrb_tb2_set_cell, MRB_ARGS_REQ(5));
 }
 
