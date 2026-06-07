@@ -13,6 +13,7 @@ Mruby bindings for the [termbox2 C library](https://github.com/termbox/termbox2)
 To build, you'll need to have mruby and termbox2 submodules pulled first before running the command.
 This build will be for development and testing mode
 
+    git submodule update --init --recursive
     bin/build
 
 ## Run mruby code
